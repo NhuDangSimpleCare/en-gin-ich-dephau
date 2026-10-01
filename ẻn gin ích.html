@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Welcome to nginX nhưng mà...</title>
+<style>
+    html { color-scheme: light dark; }
+    body {
+        width: 38em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+        padding-top: 10%;
+        line-height: 1.6;
+        user-select: none;
+    }
+    h1 {
+        font-size: 1.6em;
+        color: #d9534f;
+    }
+    .badge {
+        background: #333;
+        color: #00ff66;
+        padding: 2px 6px;
+        font-family: monospace;
+        border-radius: 3px;
+        font-size: 0.9em;
+    }
+    .fake-button {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 8px 16px;
+        background: #009639; /* Nginx green */
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.1s;
+    }
+    .status-box {
+        margin-top: 20px;
+        padding: 12px;
+        border-left: 4px solid #f0ad4e;
+        background: rgba(240, 173, 78, 0.1);
+        font-size: 0.9em;
+    }
+</style>
+</head>
+<body>
+    <h1>Welcome to nginX (Bản Chạy Bằng Niềm Tin)!</h1>
+    
+    <p>Nếu bạn đang thấy trang này, nghĩa là con web server <span class="badge">nginx</span> đã được cài đặt thành công, nhưng <strong>dev chưa code xong</strong> hoặc <strong>backend vừa sập</strong>.</p>
+
+    <div class="status-box">
+        <strong>Tình trạng hệ thống:</strong>
+        <ul>
+            <li>RAM VPS: Còn đúng 12MB.</li>
+            <li>Database: Đang cầu nguyện.</li>
+            <li>Docker container: Exit code 137 cách đây 3 phút.</li>
+        </ul>
+    </div>
+
+    <p>Để hệ thống hoạt động bình thường trở lại:</p>
+    <ul>
+        <li>Không F5 liên tục kẻo cháy chip máy chủ.</li>
+        <li>Vui lòng chuyển khoản tiền cafe cho Sysadmin để mở khóa port.</li>
+        <li>Kiểm tra lại xem bạn có gõ nhầm domain sang web lậu không.</li>
+    </ul>
+
+    <p><em>Cảm ơn vì đã không DDoS con server còm này.</em></p>
+
+    <!-- Nút troll né chuột kinh điển -->
+    <div style="text-align: center; margin-top: 30px;">
+        <button id="fixBtn" class="fake-button" onmouseover="dodgeButton()">Bấm vào đây để Fix Lỗi Tự Động</button>
+    </div>
+
+    <script>
+        function dodgeButton() {
+            const btn = document.getElementById('fixBtn');
+            const randomX = Math.floor(Math.random() * 300) - 150;
+            const randomY = Math.floor(Math.random() * 150) - 75;
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        document.getElementById('fixBtn').addEventListener('click', () => {
+            alert("Bắt được nút rồi à? Nhưng web vẫn lỗi nhé!");
+            window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Rickroll
+        });
+    </script>
+</body>
+</html>
