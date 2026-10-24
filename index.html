@@ -1,91 +1,331 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Welcome to nginX nhưng mà...</title>
-<style>
-    html { color-scheme: light dark; }
-    body {
-        width: 38em;
-        margin: 0 auto;
-        font-family: Tahoma, Verdana, Arial, sans-serif;
-        padding-top: 10%;
-        line-height: 1.6;
-        user-select: none;
-    }
-    h1 {
-        font-size: 1.6em;
-        color: #d9534f;
-    }
-    .badge {
-        background: #333;
-        color: #00ff66;
-        padding: 2px 6px;
-        font-family: monospace;
-        border-radius: 3px;
-        font-size: 0.9em;
-    }
-    .fake-button {
-        display: inline-block;
-        margin-top: 15px;
-        padding: 8px 16px;
-        background: #009639; /* Nginx green */
-        color: white;
-        text-decoration: none;
-        border-radius: 4px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: transform 0.1s;
-    }
-    .status-box {
-        margin-top: 20px;
-        padding: 12px;
-        border-left: 4px solid #f0ad4e;
-        background: rgba(240, 173, 78, 0.1);
-        font-size: 0.9em;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>27NetTeam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #05060f;
+            --cyan: #00f0ff;
+            --purple: #a855f7;
+            --neon-pink: #ff007f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* Ngăn chặn bôi đen văn bản */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-primary);
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Animated Background Particles / Aurora */
+        .aurora-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .aurora-layer {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 40%);
+            animation: rotateAurora 20s linear infinite;
+            filter: blur(60px);
+        }
+
+        .aurora-layer:nth-child(2) {
+            background: radial-gradient(circle at 30% 70%, rgba(255, 0, 127, 0.1) 0%, transparent 60%);
+            animation: rotateAurora 30s linear infinite reverse;
+        }
+
+        @keyframes rotateAurora {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Grid */
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            animation: gridMove 10s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 50px; }
+        }
+
+        /* Center Text - Exact from Original CSS */
+        .center-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .title-line {
+            display: block;
+            position: relative;
+            font-size: 8rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+        }
+
+        .title-line--animated {
+            background: linear-gradient(135deg, #fff 0%, var(--cyan) 25%, var(--purple) 50%, var(--cyan) 75%, #fff 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 6s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glitch effect for title */
+        .title-line--animated::before,
+        .title-line--animated::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-line--animated::before {
+            animation: glitch-1 4s infinite linear alternate-reverse;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            z-index: -1;
+        }
+
+        .title-line--animated::after {
+            animation: glitch-2 4s infinite linear alternate-reverse;
+            clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+            z-index: -1;
+        }
+
+        @keyframes glitch-1 {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-4px, -2px); }
+            94% { transform: translate(4px, 2px); }
+            96% { transform: translate(-2px, 1px); }
+            98% { transform: translate(2px, -1px); }
+        }
+
+        @keyframes glitch-2 {
+            0%, 90%, 100% { transform: translate(0); }
+            91% { transform: translate(3px, 1px); }
+            93% { transform: translate(-3px, -1px); }
+            95% { transform: translate(2px, -2px); }
+            97% { transform: translate(-2px, 2px); }
+        }
+
+        /* Canvas Particles */
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        /* Cursor Glow */
+        #cursor-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.06) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+
+        body:hover #cursor-glow {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .title-line {
+                font-size: 5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to nginX (Bản Chạy Bằng Niềm Tin)!</h1>
-    
-    <p>Nếu bạn đang thấy trang này, nghĩa là con web server <span class="badge">nginx</span> đã được cài đặt thành công, nhưng <strong>dev chưa code xong</strong> hoặc <strong>backend vừa sập</strong>.</p>
-
-    <div class="status-box">
-        <strong>Tình trạng hệ thống:</strong>
-        <ul>
-            <li>RAM VPS: Còn đúng 12MB.</li>
-            <li>Database: Đang cầu nguyện.</li>
-            <li>Docker container: Exit code 137 cách đây 3 phút.</li>
-        </ul>
+    <div class="aurora-bg">
+        <div class="aurora-layer"></div>
+        <div class="aurora-layer"></div>
     </div>
+    
+    <div class="grid-bg"></div>
 
-    <p>Để hệ thống hoạt động bình thường trở lại:</p>
-    <ul>
-        <li>Không F5 liên tục kẻo cháy chip máy chủ.</li>
-        <li>Vui lòng chuyển khoản tiền cafe cho Sysadmin để mở khóa port.</li>
-        <li>Kiểm tra lại xem bạn có gõ nhầm domain sang web lậu không.</li>
-    </ul>
+    <canvas id="particles"></canvas>
+    <div id="cursor-glow" aria-hidden="true"></div>
 
-    <p><em>Cảm ơn vì đã không DDoS con server còm này.</em></p>
-
-    <!-- Nút troll né chuột kinh điển -->
-    <div style="text-align: center; margin-top: 30px;">
-        <button id="fixBtn" class="fake-button" onmouseover="dodgeButton()">Bấm vào đây để Fix Lỗi Tự Động</button>
+    <div class="center-content">
+        <span class="title-line title-line--animated" data-text="27NetTeam">27NetTeam</span>
+        <span class="title-line title-line--animated" style="font-size: 20px;" data-text="404 NOT FOUND">404 NOT FOUND</span>
+        
     </div>
 
     <script>
-        function dodgeButton() {
-            const btn = document.getElementById('fixBtn');
-            const randomX = Math.floor(Math.random() * 300) - 150;
-            const randomY = Math.floor(Math.random() * 150) - 75;
-            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        // Particles setup
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        const cursorGlow = document.getElementById('cursor-glow');
+        
+        let width, height;
+        let particlesArray = [];
+        let mouse = { x: -1000, y: -1000 };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            if (cursorGlow && window.innerWidth >= 768) {
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+            }
+        });
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         }
 
-        document.getElementById('fixBtn').addEventListener('click', () => {
-            alert("Bắt được nút rồi à? Nhưng web vẫn lỗi nhé!");
-            window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Rickroll
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.3 - 0.15;
+                this.speedY = Math.random() * 0.3 - 0.15;
+                this.color = Math.random() > 0.5 ? '#00f0ff' : '#a855f7';
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > width) this.x = 0;
+                if (this.x < 0) this.x = width;
+                if (this.y > height) this.y = 0;
+                if (this.y < 0) this.y = height;
+
+                // Mouse interaction
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                let mouseRadius = 200;
+                if (dist < mouseRadius) {
+                    let force = (mouseRadius - dist) / mouseRadius;
+                    this.speedX -= (dx / dist) * force * 0.02;
+                    this.speedY -= (dy / dist) * force * 0.02;
+                }
+                
+                this.speedX *= 0.999;
+                this.speedY *= 0.999;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createParticles() {
+            particlesArray = [];
+            let numberOfParticles = (width * height) / 10000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            
+            // Connect particles
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 240, 255, ${0.4 * (1 - distance / 120)})`;
+                        ctx.lineWidth = 1.2;
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                        ctx.closePath();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            initCanvas();
+            createParticles();
         });
+
+        initCanvas();
+        createParticles();
+        animate();
     </script>
 </body>
 </html>
